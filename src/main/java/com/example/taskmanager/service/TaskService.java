@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Service
 public class TaskService {
 
-    final TaskRepository taskRepository;
+   final TaskRepository taskRepository;
     final ModelMapper modelMapper;
 
     public TaskService(TaskRepository taskRepository ,ModelMapper modelMapper) {
@@ -22,9 +22,19 @@ public class TaskService {
 
     public List<TaskDTO> getAllTasks(){
         List<Task> tasks = taskRepository.findAll();
-        return tasks.stream()
-                .map((task)->modelMapper.map(task,TaskDTO.class))
+        // Logging for debugging purposes
+        System.out.println("Billaha Shot");
+
+        // Convert Task entities to TaskDTOs
+        List<TaskDTO> taskDTOs = tasks.stream()
+                .map(task -> modelMapper.map(task, TaskDTO.class))
                 .collect(Collectors.toList());
+
+        // Print each TaskDTO
+        taskDTOs.forEach(taskDTO -> System.out.println(taskDTO));
+
+        // Return the converted TaskDTOs
+        return taskDTOs;
     };
 
     public void createTask(TaskDTO taskDTO){};
